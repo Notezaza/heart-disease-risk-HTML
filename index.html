@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>แบบประเมินความเสี่ยงโรคหลอดเลือดหัวใจ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap');
+      body {
+        font-family: 'Prompt', sans-serif;
+        background-color: #561f22;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h3 {
+        margin-bottom: 20px;
+        color: #561f22;
+        text-align: center;
+      }
+      .form-label {
+        font-weight: 600;
+      }
+      #result {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h3 class="text-center">แบบประเมินความเสี่ยงโรคหลอดเลือดหัวใจ</h3>
+      <form method="POST" action="/calculate">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <!-- ฟอร์มสำหรับกรอกข้อมูล -->
+            <label for="age" class="form-label">อายุ</label>
+            <input type="number" class="form-control" name="age" id="age" required>
+            
+            <label for="gender" class="form-label">เพศ</label>
+            <select class="form-select" name="gender" id="gender" required>
+              <option value="" selected disabled>เลือกเพศ</option>
+              <option value="ชาย">ชาย</option>
+              <option value="หญิง">หญิง</option>
+            </select>
+            
+            <label for="smoking" class="form-label">คุณสูบบุหรี่หรือไม่</label>
+            <select class="form-select" name="smoking" id="smoking" required>
+              <option value="" selected disabled>กรุณาเลือก</option>
+              <option value="True">สูบ</option>
+              <option value="False">ไม่สูบ</option>
+            </select>
+            
+            <label for="hypertension" class="form-label">คุณมีความดันสูงหรือไม่</label>
+            <select class="form-select" name="hypertension" id="hypertension" required>
+              <option value="" selected disabled>กรุณาเลือก</option>
+              <option value="True">ความดันสูง</option>
+              <option value="False">ความดันปกติ</option>
+            </select>
+            
+            <label for="waist_circumference" class="form-label">รอบเอว (cm.)</label>
+            <input type="number" class="form-control" name="waist_circumference" id="waist_circumference" required>
+            
+            <label for="weight" class="form-label">น้ำหนัก (kg)</label>
+            <input type="number" class="form-control" name="weight" id="weight" required>
+            
+            <label for="height" class="form-label">ส่วนสูง (cm.)</label>
+            <input type="number" class="form-control" name="height" id="height" required>
+            
+            <label for="exercise" class="form-label">คุณออกกำลังหรือไม่</label>
+            <select class="form-select" name="exercise" id="exercise" required>
+              <option value="" selected disabled>กรุณาเลือก</option>
+              <option value="True">ไม่ออกกำลังกาย</option>
+              <option value="False">ออกกำลังกายปกติ</option>
+            </select>
+            
+            <label for="family_history" class="form-label">คุณมีประวัติคนในครอบครัวเป็นโรคหลอดเลือดหัวใจ</label>
+            <select class="form-select" name="family_history" id="family_history" required>
+              <option value="" selected disabled>กรุณาเลือก</option>
+              <option value="True">มี</option>
+              <option value="False">ไม่มี</option>
+            </select>
+            
+            <label for="blood_sugar" class="form-label">ระดับน้ำตาลในเลือด (mg/dL)</label>
+            <input type="number" class="form-control" name="blood_sugar" id="blood_sugar" required>
+            
+            <label for="cholesterol" class="form-label">ระดับคอเลสเตอรอล (mg/dL)</label>
+            <input type="number" class="form-control" name="cholesterol" id="cholesterol" required>
+            
+            <label for="diet" class="form-label">คุณทานอาหารอย่างไร</label>
+            <select class="form-select" name="diet" id="diet" required>
+              <option value="" selected disabled>กรุณาเลือก</option>
+              <option value="ไขมันสูง">ทานอาหารที่มีไขมันสูง</option>
+              <option value="ไม่เพียงพอ">ไม่ทานผักผลไม้</option>
+              <option value="ครบหมู่">ทานอาหารครบ 5 หมู่</option>
+            </select>
+            
+            <div class="col-md-12 text-center mt-4">
+              <button type="submit" class="btn btn-primary w-50">ประเมินความเสี่ยง</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      {% if risk %}
+      <div id="result">
+        <h4>ผลการประเมิน</h4>
+        <p>คะแนนความเสี่ยง: {{ risk }}</p>
+        <p>คำแนะนำ: {{ advice }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
